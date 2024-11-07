@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda Minorista</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tienda Minorista</h1>
+        <h2>Bienvenido a la aplicación de gestión de tienda</h2>
+
+        <!-- Botones de navegación -->
+        <!-- Botones de navegación -->
+<div class="section navigation-buttons">
+    <button class="left-button" onclick="showAdmin()"><i class="fas fa-user-shield"></i> Administrador</button>
+    <button class="right-button" onclick="showClient()"><i class="fas fa-shopping-cart"></i> Cliente</button>
+</div>
+
+
+        <!-- Sección de administrador -->
+        <div id="adminSection" class="hidden">
+            <h2>Zona de Administrador</h2>
+            <button onclick="backToMain()">Volver</button>
+
+            <!-- Formulario para agregar o editar productos -->
+            <div class="section">
+                <h3 id="productFormTitle">Agregar Producto</h3>
+                <form id="productForm">
+                    <input type="text" id="productName" placeholder="Nombre del Producto" required>
+                    <input type="text" id="productDesc" placeholder="Descripción" required>
+                    <input type="number" id="productPrice" placeholder="Precio" step="0.01" required>
+                    <input type="number" id="productStock" placeholder="Cantidad en Stock" required>
+                    <button type="submit">Guardar Producto</button>
+                </form>
+            </div>
+
+            <!-- Lista de productos -->
+            <div class="section">
+                <h3>Inventario</h3>
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Productos se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Sección de cliente -->
+        <div id="clientSection" class="hidden">
+            <h2>Zona de Cliente</h2>
+            <button onclick="backToMain()">Volver</button>
+
+            <!-- Lista de productos disponibles -->
+            <div class="section">
+                <h3>Productos Disponibles</h3>
+                <table id="clientProductTable">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Comprar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Productos se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cargar el script al final del body -->
+    <script src="/static/script.js"></script>
+</body>
+</html>
