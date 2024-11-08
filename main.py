@@ -18,7 +18,7 @@ app = FastAPI()
 # Configuración CORS para permitir peticiones desde el frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],  # Puedes restringir esto según tus necesidades
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,7 +32,6 @@ try:
 except Exception as e:
     logger.error(f"Error al conectar a MongoDB: {e}")
 
-
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 
 # Modelos de datos
@@ -42,10 +41,9 @@ class Producto(BaseModel):
     descripcion: str
     precio: float = Field(..., gt=0)
     cantidad_en_stock: int = Field(..., ge=0)
-
+    
     class Config:
         orm_mode = True
-
 
 def producto_helper(producto) -> dict:
     return {
@@ -56,17 +54,13 @@ def producto_helper(producto) -> dict:
         "cantidad_en_stock": producto["cantidad_en_stock"],
     }
 
-
-
 # Ruta para servir el archivo HTML principal
 @app.get("/")
 async def read_index():
     logger.info("Sirviendo index.html")
     return FileResponse(os.path.join("frontend", "index.html"))
 
-
-
-# Rutas para productos (Administrador)
+# Rutas para productos (Administrador) sin autenticación
 @app.get("/admin/productos/", response_model=List[Producto])
 async def obtener_productos():
     try:
@@ -102,7 +96,6 @@ async def crear_producto(producto: Producto):
         logger.error(f"Error al crear producto: {e}")
         raise HTTPException(status_code=500, detail="Error interno del servidor")
     
-
 @app.put("/admin/productos/{producto_id}", response_model=Producto)
 async def actualizar_producto(producto_id: str, producto: Producto):
     try:
@@ -135,7 +128,6 @@ async def eliminar_producto(producto_id: str):
         logger.error(f"Error al eliminar producto: {e}")
         raise HTTPException(status_code=500, detail="Error interno del servidor")
     
-
 # Rutas para compras (Cliente)
 class Compra(BaseModel):
     producto_id: str
